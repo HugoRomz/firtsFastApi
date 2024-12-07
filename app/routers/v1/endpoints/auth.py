@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
-from services.auth import create_user, verify_user
-from models.user import UserCreate, UserOut, UserLogin
-from db.client import db 
+from app.services.auth import create_user, verify_user
+from app.models.user import UserCreate, UserOut, UserLogin
+from app.db.client import db 
 
 router = APIRouter(responses={status.HTTP_404_NOT_FOUND: {"message":"No encontrado"}})
 

@@ -1,7 +1,7 @@
-from db.client import db
+from app.db.client import db
 from datetime import datetime
-from models.user import UserCreate, UserInDB
-from services.validation import validate_passwords,get_password_hash, verify_password
+from app.models.user import UserCreate, UserInDB
+from app.services.validation import validate_passwords,get_password_hash, verify_password
 
 
 async def create_user(user: UserCreate):
