@@ -1,0 +1,4 @@
+fastapi
+pyjwt
+passlib
+pymongo
