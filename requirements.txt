@@ -3,3 +3,4 @@ pyjwt
 passlib
 pymongo
 uvicorn
+motor
