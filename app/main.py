@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from routers.v1.endpoints import auth, db_test
-from core.config import settings
+from app.routers.v1.endpoints import auth, db_test
+from app.core.config import settings
 
 app = FastAPI(title=settings.PROJECT_NAME,version=settings.VERSION)
 
