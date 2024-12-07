@@ -4,3 +4,7 @@ passlib
 pymongo
 uvicorn
 motor
+pydantic
+pydantic-settings
+python-dotenv
+typing-extensions
