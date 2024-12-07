@@ -9,3 +9,4 @@ pydantic[email]
 pydantic-settings
 python-dotenv
 typing-extensions
+pymongo[srv]
