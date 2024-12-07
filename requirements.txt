@@ -2,3 +2,4 @@ fastapi
 pyjwt
 passlib
 pymongo
+uvicorn
