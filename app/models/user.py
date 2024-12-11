@@ -10,7 +10,7 @@ class UserInDB(BaseModel):
     date_of_birth: Optional[date] = None
     gendered: Optional[Literal["Male", "Female", "Non-Binary", "Unspecified"]] = None
     email: EmailStr
-    phone_number: int
+    phone_number: str
     hashed_password: str
     is_active: bool = True
 
@@ -20,7 +20,7 @@ class UserCreate(BaseModel):
     date_of_birth: Optional[date] = None
     gendered: Optional[Literal["Male", "Female", "Non-Binary", "Unspecified"]] = None
     email: EmailStr
-    phone_number: int
+    phone_number: str
     password: str
     confirm_password: str
 
@@ -31,7 +31,7 @@ class UserOut(BaseModel):
     date_of_birth: Optional[date] = None
     gendered: str
     email: EmailStr
-    phone_number: int
+    phone_number: str
     is_active: bool
 
 class UserLogin(BaseModel):
