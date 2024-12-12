@@ -18,7 +18,7 @@ def create_access_token(data: dict, expires_minutes: Optional[int] = None):
     
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
-    return encoded_jwt.decode("utf-8")
+    return encoded_jwt
 
 def verify_token(token: str):
     try:
