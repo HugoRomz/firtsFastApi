@@ -19,3 +19,19 @@ async def login(user: UserLogin):
 @router.post("/logout")
 async def logout(user: UserToken):
     return await logout_user(user)
+
+@router.post("/forgot-password")
+async def forgot_password():
+    return {"message": "En desarrollo"}
+
+@router.post("/reset-password")
+async def reset_password():
+    return {"message": "En desarrollo"}
+
+@router.post("/change-password")
+async def change_password():
+    return {"message": "En desarrollo"}
+
+@router.get("/user")
+async def get_user():
+    return {"message": "En desarrollo"}

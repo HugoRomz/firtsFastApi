@@ -62,13 +62,11 @@ async def login_user(user: UserLogin) -> UserOut:
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Credenciales inválidas",
         )
-    
-    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(data={"sub": user_data.email}, expires_delta=access_token_expires)
 
-    user_id = ObjectId(user_data.id)  # Convertir _id de cadena a ObjectId
+    access_token = create_access_token(data={"sub": user_data.email, "id": user_data.id})
+
+    user_id = ObjectId(user_data.id)  
     
-    # Actualizar token en la base de datos
     await db["users"].update_one({"_id": user_id}, {"$set": {"user_token": access_token}})
     
 
