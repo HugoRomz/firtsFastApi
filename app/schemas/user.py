@@ -12,6 +12,7 @@ class UserCreate(BaseModel):
     phone_number: str
     password: str
     confirm_password: str
+    is_active: bool = True
 
 class UserOut(BaseModel):
     id: Optional[str] = None

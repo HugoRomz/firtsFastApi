@@ -12,5 +12,5 @@ class UserInDB(BaseModel):
     email: EmailStr
     phone_number: str
     hashed_password: str
-    is_active: bool = True
+    is_active: bool
     user_token: Optional[str] = None

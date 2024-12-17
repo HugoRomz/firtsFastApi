@@ -1,38 +1,24 @@
 from datetime import datetime, timedelta, timezone
+from typing import Optional
 from fastapi import HTTPException, status
 import jwt
-from jwt.exceptions import InvalidTokenError, ExpiredSignatureError
+from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 from app.core.config import settings
-from typing import Optional
 
-def create_access_token(data: dict, expires_minutes: Optional[int] = None):
-    
+
+def create_access_token(data: dict, expires_minutes: Optional[int] = None) -> str:
     to_encode = data.copy()
-
-    if expires_minutes is not None:
-
-        expire = datetime.now(timezone.utc) + timedelta(minutes=expires_minutes)
-    else:
-
-        expire = datetime.now(timezone.utc) + timedelta(days=settings.ACCESS_TOKEN_EXPIRE_DAYS)
-    
+    expire = datetime.now(timezone.utc) + (
+        timedelta(minutes=expires_minutes) if expires_minutes else timedelta(days=settings.ACCESS_TOKEN_EXPIRE_DAYS)
+    )
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
-    return encoded_jwt
+    return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM).decode("utf-8")
+
 
 def verify_token(token: str):
     try:
-
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-        return payload
+        return jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
     except ExpiredSignatureError:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="El token ha expirado.",
-        )
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token expirado.")
     except InvalidTokenError:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token inválido.",
-        )
-    
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token inválido.")
