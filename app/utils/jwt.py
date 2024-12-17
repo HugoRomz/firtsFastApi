@@ -12,7 +12,7 @@ def create_access_token(data: dict, expires_minutes: Optional[int] = None) -> st
         timedelta(minutes=expires_minutes) if expires_minutes else timedelta(days=settings.ACCESS_TOKEN_EXPIRE_DAYS)
     )
     to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM).decode("utf-8")
+    return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
 
 def verify_token(token: str):
