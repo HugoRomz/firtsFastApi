@@ -4,6 +4,7 @@ from app.schemas.user import UserCreate, UserLogin, UserOut
 from app.utils.hashing import get_password_hash, verify_password
 from app.utils.jwt import create_access_token
 from app.utils.validation import validate_passwords
+from app.utils.roles import verify_role_exists
 from bson import ObjectId
 from fastapi import HTTPException, status
 
@@ -26,6 +27,16 @@ async def create_user(user: UserCreate) -> UserOut:
 
     if user_data.get("date_of_birth"):
         user_data["date_of_birth"] = datetime.combine(user_data["date_of_birth"], datetime.min.time())
+
+    # AGREGAR ROL
+    if user_data.get("role_id"):
+        role = await verify_role_exists(user_data["role_id"])
+        user_data["role_id"] = role["_id"]  
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="El rol es requerido.",
+        )
     
     user_data["hashed_password"] = hashed_password
     del user_data["password"], user_data["confirm_password"]

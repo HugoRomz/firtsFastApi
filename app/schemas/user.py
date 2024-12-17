@@ -13,6 +13,7 @@ class UserCreate(BaseModel):
     password: str
     confirm_password: str
     is_active: bool = True
+    role_id: Optional[str] = None
 
 class UserOut(BaseModel):
     id: Optional[str] = None
@@ -23,6 +24,7 @@ class UserOut(BaseModel):
     email: EmailStr
     phone_number: str
     is_active: bool
+    role_id: Optional[str] = None
 
 class UserLogin(BaseModel):
     email: EmailStr
