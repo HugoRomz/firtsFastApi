@@ -1,5 +1,7 @@
+from typing import List, Optional
 from app.db.client import db
 from datetime import datetime
+from app.schemas.roles import RoleOut
 from app.schemas.user import UserCreate, UserLogin, UserOut
 from app.utils.hashing import get_password_hash, verify_password
 from app.utils.jwt import create_access_token
@@ -61,3 +63,9 @@ async def login_user(user: UserLogin):
 async def logout_user(user: UserOut):
     await db["users"].update_one({"_id": ObjectId(user.id)}, {"$set": {"user_token": None}})
     return {"message": "Sesión cerrada exitosamente."}
+
+
+async def get_public_roles() -> List[RoleOut]:
+    query = {"type": "public"}
+    roles = await db["roles"].find(query).to_list(length=None)
+    return [RoleOut(id=str(r["_id"]), **r) for r in roles]

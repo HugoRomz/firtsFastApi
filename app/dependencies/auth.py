@@ -32,4 +32,5 @@ async def get_current_user(token: str = Depends(verify_token)) -> UserOut:
         date_of_birth=user.get("date_of_birth"),
         gendered=user.get("gendered"),
         is_active=user["is_active"],
+        role_id=str(user["role_id"]) if user.get("role_id") else None
     )
