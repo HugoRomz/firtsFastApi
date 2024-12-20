@@ -1,4 +1,5 @@
-from pydantic import BaseModel, EmailStr, Field
+from bson import ObjectId
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from typing_extensions import Annotated
 from typing import Optional, Literal
 from datetime import date
@@ -25,6 +26,13 @@ class UserOut(BaseModel):
     phone_number: str
     is_active: bool
     role_id: Optional[str] = None
+    user_token: Optional[str] = None
+
+    @field_validator("id", "role_id", mode="before")
+    def convert_objectid(cls, value):
+        if isinstance(value, ObjectId):
+            return str(value)
+        return value
 
 class UserLogin(BaseModel):
     email: EmailStr
