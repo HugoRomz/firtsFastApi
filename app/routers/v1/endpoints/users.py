@@ -1,19 +1,19 @@
 # app/routers/v1/roles.py
 from fastapi import APIRouter, Depends, HTTPException, status
 from typing import List
-
+from app.services.user import list_users, get_user_by_id
 from app.dependencies.auth import get_current_user
 from app.middleware.verify_role import verify_role
 
 router = APIRouter()
 
 @router.get("/users")
-async def get_all_users(skip: int = 0, limit: int = 10, current_user=Depends(get_current_user)):
-    return "Listar usuarios (con paginación y filtros opcionales)."
+async def get_all_users(skip: int = 0, limit: int = 10, current_user=Depends(verify_role("Wooper"))):
+   return await list_users(skip=skip, limit=limit)
 
 @router.get("/users/{id}")
 async def get_user(id: str, current_user=Depends(get_current_user)):
-    return "Obtener detalles de un usuario específico."
+    return await get_user_by_id(id)
 
 @router.patch("/users/{id}")
 async def update_user(id: str, current_user=Depends(get_current_user)):

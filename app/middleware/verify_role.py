@@ -6,7 +6,6 @@ from app.dependencies.auth import get_current_user
 
 def verify_role(required_role: str):
     async def wrapper(current_user: UserOut = Depends(get_current_user)):
-        print(current_user)
         if not current_user.role_id:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
@@ -14,6 +13,10 @@ def verify_role(required_role: str):
             )
 
         role = await db["roles"].find_one({"_id": ObjectId(current_user.role_id)})
+        
+        if "Administrador" in role.get("name"):
+            return current_user
+            
         if not role or role.get("name") != required_role:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
