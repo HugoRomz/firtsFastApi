@@ -38,3 +38,44 @@ async def create_role(role_data: RoleCreate) -> RoleOut:
     result = await db["roles"].insert_one(role_dict)
     return RoleOut(id=str(result.inserted_id), **role_dict)
 
+async def update_role(role_id: str, role_data: RoleUpdate) -> RoleOut:
+    if not ObjectId.is_valid(role_id):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="ID de rol inválido."
+        )
+
+    role_dict = role_data.model_dump()
+    role = await db["roles"].find_one({"_id": ObjectId(role_id)})
+    if not role:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Rol no encontrado."
+        )
+
+    existing_role = await db["roles"].find_one({"name": role_dict["name"]})
+    if existing_role and existing_role["_id"] != ObjectId(role_id):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Ya existe un rol con ese nombre."
+        )
+    await db["roles"].update_one({"_id": ObjectId(role_id)}, {"$set": role_dict})
+    return RoleOut(id=role_id, **role_dict)
+
+
+async def delete_role(role_id: str):
+    if not ObjectId.is_valid(role_id):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="ID de rol inválido."
+        )
+
+    role = await db["roles"].find_one({"_id": ObjectId(role_id)})
+    if not role:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Rol no encontrado."
+        )
+
+    await db["roles"].delete_one({"_id": ObjectId(role_id)})
+    return {"message": "Rol eliminado exitosamente."}
