@@ -1,0 +1,263 @@
+
+{
+  _id: ObjectId("67624234f498821fd8f465cb"),
+  role_id: "6762416aeae7ec4366a1f436",
+  nickname: "romz",
+  nombre: "Hugo Rafael",
+  apellidos: "Rosales Meléndez",
+  sexo: "M",
+  email: "romz@example.com",
+  passwordHash: "$2b$12$Npxcm8A2GCP4wyMjngNfMu6FpeWVTchT5hddW//3rX73mNZjyPzb2",
+  fechaNacimiento: "2024-12-18T00:00:00.000+00:00",
+  userToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJyb2xAZXhhbXBsZS5jb20iLCJpZCI6IjY3NjI0MjM0ZjQ5ODgyMWZkOGY0NjVjYiIsImV4cCI6MTc0MjI2ODg0N30.rKm1TEwhj6s5FvU9EKw0Hqb2jjXrTMN2s6AdSMbqIT8"
+
+  // Completar perfil
+  fotoPerfil: "url",
+  fotoPortada: "url",
+
+  contacto: {
+    correoElectronico: "contacto@negocio.com",
+    paginaWeb: "http://www.minegocio.com",
+    telefonos: ["555-123-4567", "555-987-6543"]
+    redes_social: {
+      facebook: "https://www.facebook.com/minegocio",
+      twitter: "https://www.twitter.com/minegocio",
+      instagram: "https://www.instagram.com/minegocio"
+    }
+  },
+
+
+  // localizacion
+  ubicacion: {
+    calle: "",
+    colonia: "",
+    municipio: "",
+    estado: "CDMX",
+    cp: "12345",
+    coordenadas: {
+    }
+  },
+
+  // Datos del trabajo
+  categorias: [
+    ObjectId("id_categoria")   
+    name: "Ciencia y Tecnología",
+  ],
+  subcategorias: [
+    ObjectId("id_subcategoria") 
+    name: "",
+  ],
+
+  descripcionNegocio: "Ofrecemos ",
+  habilidades: ["Limpieza", "Atención", "profesional"],
+  servicios: [
+    {
+      nombre: "Limpieza",
+      precio: 500,
+      descripcion: "Incluye"
+    },
+    {
+      nombre: "Limpieza de carros",
+      precio: 300,
+      descripcion: ""
+    }
+  ],
+
+  // Experiencia laboral
+
+  experienciaLaboral: [
+    {
+      empresa: "Limpiezas XYZ",
+      puesto: "Técnico de Limpieza",
+      periodo: {
+        inicio: ISODate("2015-01-01T00:00:00Z"),
+        fin: ISODate("2018-01-01T00:00:00Z")
+      },
+      documentos: [
+        {
+          tipo: "foto",
+          url: "url_de_foto_o_documento.pdf"
+        }
+      ]
+    },
+    {
+      empresa: "Limpiezas XYZ",
+      puesto: "Técnico de Limpieza",
+      periodo: {
+        inicio: ISODate("2015-01-01T00:00:00Z"),
+        fin: ISODate("2018-01-01T00:00:00Z")
+      },
+      documentos: [
+        {
+          tipo: "foto",
+          url: "url_de_foto_o_documento.pdf"
+        }
+      ]
+    }
+  ],
+
+// Estudios o formacion todavia veo
+  estudios: [
+    {
+      nivel: "Licenciatura",
+      institucion: "Universidad ABC",
+      periodo: {
+        inicio: "",
+        fin: ""
+      },
+
+    }
+  ],
+
+  createdAt: ISODate("2024-12-18T00:00:00Z"),
+  updatedAt: ISODate("2024-12-18T00:00:00Z")
+}
+
+
+// EJEMPLO COMPLETO:
+
+{
+  "_id": "67624234f498821fd8f465cb",
+  "role_id": "6762416aeae7ec4366a1f436",
+  "nickname": "romz",
+  "nombre": "Hugo Rafael",
+  "apellidos": "Rosales Meléndez",
+  "sexo": "M",
+  "email": "romz@example.com",
+  "hashed_password": "$2b$12$hashed_password",
+  "fechaNacimiento": "2024-12-18T00:00:00.000+00:00",
+  "is_active": true,
+  "tokens": [
+    {
+      "jti": "unique-token-id-123",
+      "expires_at": "2024-12-20T15:00:00Z"
+    }
+  ],
+  "password_reset": null,
+  "email_verified": true,
+  "phone_verified": false,
+  "preferences": {
+    "theme": "dark"
+  },
+  "login_history": [
+    {
+      "timestamp": "2024-12-18T12:00:00Z",
+      "ip_address": "192.168.0.1",
+      "device": "Chrome on Windows"
+    }
+  ],
+  "contacto": {
+    "correoElectronico": "contacto@negocio.com",
+    "paginaWeb": "http://www.minegocio.com",
+    "telefonos": ["555-123-4567"],
+    "redes_social": {
+      "facebook": "https://facebook.com/miperfil"
+    }
+  },
+  "ubicacion": {
+    "calle": "Av. Siempre Viva",
+    "colonia": "Springfield",
+    "municipio": "Shelbyville",
+    "estado": "CDMX",
+    "cp": "12345"
+  },
+  "categorias": [{"id": "id_categoria", "name": "Ciencia y Tecnología"}],
+  "subcategorias": [{"id": "id_subcategoria", "name": "Programación"}],
+  "descripcionNegocio": "Servicios de limpieza profesional",
+  "habilidades": ["Atención al cliente", "Limpieza"],
+  "servicios": [
+    {
+      "nombre": "Limpieza de oficina",
+      "precio": 500,
+      "descripcion": "Limpieza profunda para oficinas"
+    }
+  ],
+  "experienciaLaboral": [
+    {
+      "empresa": "Limpiezas XYZ",
+      "puesto": "Técnico de Limpieza",
+      "periodo": {
+        "inicio": "2015-01-01T00:00:00Z",
+        "fin": "2018-01-01T00:00:00Z"
+      },
+      "documentos": [{"tipo": "foto", "url": "url_documento.pdf"}]
+    }
+  ],
+  "estudios": [
+    {
+      "nivel": "Licenciatura",
+      "institucion": "Universidad ABC",
+      "periodo": {
+        "inicio": "2010-01-01T00:00:00Z",
+        "fin": "2014-12-31T00:00:00Z"
+      }
+    }
+  ],
+  "created_at": "2024-12-18T00:00:00.000+00:00",
+  "updated_at": "2024-12-18T00:00:00.000+00:00"
+}
+
+
+
+from typing import List, Optional, Dict
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
+
+class Contacto(BaseModel):
+    correoElectronico: Optional[str]
+    paginaWeb: Optional[str]
+    telefonos: Optional[List[str]]
+    redes_social: Optional[Dict[str, str]]  # Ejemplo: {"facebook": "url", "twitter": "url"}
+
+class Ubicacion(BaseModel):
+    calle: Optional[str]
+    colonia: Optional[str]
+    municipio: Optional[str]
+    estado: Optional[str]
+    cp: Optional[str]
+    coordenadas: Optional[Dict[str, float]]  # Ejemplo: {"lat": 19.432608, "lng": -99.133209}
+
+class Servicio(BaseModel):
+    nombre: str
+    precio: float
+    descripcion: Optional[str]
+
+class ExperienciaLaboral(BaseModel):
+    empresa: str
+    puesto: str
+    periodo: Dict[str, datetime]  # Ejemplo: {"inicio": datetime, "fin": datetime}
+    documentos: Optional[List[Dict[str, str]]]  # Ejemplo: [{"tipo": "foto", "url": "url"}]
+
+class Estudios(BaseModel):
+    nivel: str
+    institucion: str
+    periodo: Optional[Dict[str, datetime]]  # Ejemplo: {"inicio": datetime, "fin": datetime}
+
+class UserInDB(BaseModel):
+    _id: Optional[str]
+    role_id: Optional[str]
+    nickname: str
+    nombre: str
+    apellidos: str
+    sexo: Optional[str]
+    email: EmailStr
+    hashed_password: str
+    fechaNacimiento: Optional[datetime]
+    is_active: bool = True
+    tokens: Optional[List[Dict[str, str]]] = []  # Lista de tokens activos
+    password_reset: Optional[Dict[str, str]] = None  # Token de recuperación
+    email_verified: bool = False
+    phone_verified: bool = False
+    preferences: Optional[Dict[str, str]] = None
+    login_history: Optional[List[Dict[str, str]]] = None
+    contacto: Optional[Contacto] = None
+    ubicacion: Optional[Ubicacion] = None
+    categorias: Optional[List[Dict[str, str]]] = None  # Ejemplo: [{"id": ObjectId, "name": "string"}]
+    subcategorias: Optional[List[Dict[str, str]]] = None
+    descripcionNegocio: Optional[str]
+    habilidades: Optional[List[str]] = None
+    servicios: Optional[List[Servicio]] = None
+    experienciaLaboral: Optional[List[ExperienciaLaboral]] = None
+    estudios: Optional[List[Estudios]] = None
+    created_at: datetime
+    updated_at: datetime

@@ -1,8 +1,9 @@
-from typing import List
+from typing import Any, List
 from fastapi import HTTPException, status
 from bson import ObjectId
+from pydantic import HttpUrl
 from app.db.client import db
-from app.schemas.user import UserOut
+from app.schemas.user import UserOut, UserUpdate, UserComplete
 
 
 async def list_users(skip: int = 0, limit: int = 10):
@@ -31,3 +32,78 @@ async def get_user_by_id(user_id: str) -> UserOut:
             detail="Usuario no encontrado."
         )
     return UserOut(id=str(user["_id"]), **user)
+
+
+async def handle_complete_user(user_id: str, user_data: UserComplete):
+# LAS MIMAS VALIDACIONES
+    if not ObjectId.is_valid(user_id):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="ID de Usuario inválido."
+        )
+
+    user = await db["users"].find_one({"_id": ObjectId(user_id)})
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Usuario no encontrado."
+        )
+
+    # funcion para preparar los datos como httpurl
+    update_data = prepare_update_data(user_data.model_dump(exclude_unset=True))
+
+
+    if not update_data:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No se proporcionaron datos para completar el perfil."
+        )
+
+    result = await db["users"].update_one({"_id": ObjectId(user_id)},{"$set": update_data})
+
+    if result.modified_count == 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No se pudo completr el usuario."
+        )
+
+   
+    updated_user = await db["users"].find_one({"_id": ObjectId(user_id)})
+    return UserOut(id=str(updated_user["_id"]), **updated_user)
+
+async def deactivate_user(user_id: str):
+    # LAS MIMAS VALIDACIONES
+    if not ObjectId.is_valid(user_id):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="ID de Usuario inválido."
+        )
+    
+    user = await db["users"].find_one({"_id": ObjectId(user_id)})
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Usuario no encontrado."
+        )
+    
+    result = await db["users"].update_one({"_id": ObjectId(user_id)},{"$set": {"is_active": False}})
+    if result.modified_count == 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No se pudo desactivar el usuario."
+        )
+    
+    return {"message": "Usuario desactivado."}
+
+
+def prepare_update_data(data: dict) -> dict:
+    def convert(value: Any) -> Any:
+        if isinstance(value, HttpUrl):
+            return str(value)
+        if isinstance(value, list):
+            return [convert(item) for item in value]
+        if isinstance(value, dict):
+            return {key: convert(val) for key, val in value.items()}
+        return value
+
+    return {key: convert(val) for key, val in data.items()}
