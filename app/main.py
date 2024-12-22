@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers.v1.endpoints import auth, db_test, roles, tianguis, users
+from app.routers.v1.endpoints import auth, db_test, roles, tianguis, users, denueapi
 from app.core.config import settings
 
 
@@ -20,7 +20,7 @@ def create_app():
     app.include_router(db_test.router, prefix="/api/v1", tags=["DB Test"])
     app.include_router(roles.router, prefix="/api/v1/roles", tags=["Roles"])
     app.include_router(tianguis.router, prefix="/api/v1/tianguis", tags=["Tianguis"])
-
+    app.include_router(denueapi.router, prefix="/api/v1/denue", tags=["Denue API"])
 
     
 
