@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from typing import List
 from app.schemas.user import UserUpdate, UserComplete
-from app.services.user import list_users, get_user_by_id, handle_complete_user, deactivate_user
+from app.services.user import list_users, get_user_by_id, handle_complete_user, deactivate_user, update_user_role
 from app.dependencies.auth import get_current_user
 from app.middleware.verify_role import verify_role
 
@@ -24,8 +24,6 @@ async def complete_user(id: str, user_data: UserComplete, current_user=Depends(v
 async def delete_user(id: str, current_user=Depends(verify_role("Wooper"))):
     return await deactivate_user(id)
 
-
-
 @router.post("/users/{id}/avatar")
 async def upload_avatar(id: str, current_user=Depends(get_current_user)):
     return "Subir/actualizar foto de perfil."
@@ -33,5 +31,9 @@ async def upload_avatar(id: str, current_user=Depends(get_current_user)):
 @router.post("/users/{id}/cover")
 async def upload_cover_photo(id: str, current_user=Depends(get_current_user)):
     return "Subir/actualizar foto de portada."
+
+@router.put("/users/role/{id}")
+async def update_role(user_id: str, role_id: str, current_user=Depends(get_current_user)):
+    return await update_user_role(user_id, role_id)
 
 
